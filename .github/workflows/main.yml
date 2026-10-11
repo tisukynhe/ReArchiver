@@ -13,7 +13,7 @@ jobs:
 build:
 runs-on: ubuntu-latest
 
-```
+
 steps:
   - name: Baixar o código
     uses: actions/checkout@v4
@@ -45,4 +45,3 @@ steps:
       path: app/build/outputs/apk/debug/*.apk
       if-no-files-found: error
       retention-days: 7
-```
