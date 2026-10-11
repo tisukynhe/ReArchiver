@@ -1,6 +1,6 @@
 name: Build ReArchiver APK
 
-on:
+'on':
 workflow_dispatch:
 push:
 branches:
@@ -12,13 +12,12 @@ contents: read
 jobs:
 build:
 runs-on: ubuntu-latest
-
-
 steps:
-  - name: Baixar o repositório
-    uses: actions/checkout@v4
+- name: Checkout
+uses: actions/checkout@v4
 
-  - name: Extrair projeto Android
+
+  - name: Extrair projeto
     run: |
       unzip -o ReArchiver-Cloud-Build.zip -d source
       test -f source/ReArchiver/app/build.gradle.kts
@@ -50,3 +49,4 @@ steps:
       name: ReArchiver-debug-apk
       path: source/ReArchiver/app/build/outputs/apk/debug/*.apk
       if-no-files-found: error
+
