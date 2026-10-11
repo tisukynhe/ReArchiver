@@ -15,10 +15,15 @@ runs-on: ubuntu-latest
 
 
 steps:
-  - name: Baixar o código
+  - name: Baixar o repositório
     uses: actions/checkout@v4
 
-  - name: Configurar Java 17
+  - name: Extrair projeto Android
+    run: |
+      unzip -o ReArchiver-Cloud-Build.zip -d source
+      test -f source/ReArchiver/app/build.gradle.kts
+
+  - name: Configurar Java
     uses: actions/setup-java@v4
     with:
       distribution: temurin
@@ -36,12 +41,12 @@ steps:
       gradle-version: '8.9'
 
   - name: Compilar APK
+    working-directory: source/ReArchiver
     run: gradle --no-daemon assembleDebug
 
-  - name: Disponibilizar APK
+  - name: Salvar APK
     uses: actions/upload-artifact@v4
     with:
       name: ReArchiver-debug-apk
-      path: app/build/outputs/apk/debug/*.apk
+      path: source/ReArchiver/app/build/outputs/apk/debug/*.apk
       if-no-files-found: error
-      retention-days: 7
